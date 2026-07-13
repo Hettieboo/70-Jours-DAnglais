@@ -4,7 +4,7 @@ A self-directed, 70-day English course built for a French speaker learning to sp
 
 No backend, no build step, no account. Everything is static HTML/CSS/JS and stored locally in the browser (`localStorage`).
 
-Made with love for my love, Pierrot. 💚
+
 
 ---
 
