@@ -306,32 +306,55 @@ function renderParticipleLesson(container, lesson) {
   container.appendChild(box);
 }
 
-/* ---------- Rendering: Today ---------- */
+function ensureBilingualStyles() {
+  if (document.getElementById("bilingual-line-styles")) return;
+  const style = document.createElement("style");
+  style.id = "bilingual-line-styles";
+  style.textContent = `
+    .bilingual-en { margin: 0.3rem 0 0; font-style: italic; opacity: 0.75; font-size: 0.92em; color: var(--ink-soft, inherit); }
+  `;
+  document.head.appendChild(style);
+}
+
+// Inserts/updates a muted italic English line directly after `afterEl`,
+// reusing a stable id so re-renders update it in place instead of
+// duplicating. Removes the line entirely when `enText` is falsy.
+function setBilingualLine(id, afterEl, enText) {
+  ensureBilingualStyles();
+  let el = document.getElementById(id);
+  if (!enText) {
+    if (el) el.remove();
+    return;
+  }
+  if (!el) {
+    el = document.createElement("p");
+    el.id = id;
+    el.className = "bilingual-en";
+    afterEl.insertAdjacentElement("afterend", el);
+  }
+  el.textContent = enText;
+}
 
 function renderToday() {
   const day = getCurrentDay();
   const block = getBlockForDay(day);
   const detail = DAY_DETAILS[day] || { grammar: block.grammar, vocab: block.vocabFocus, vocabWords: [], tables: [], prompt: block.prompts[0] };
 
-  // Mission instructions render in French uniformly across every day —
-  // French is the learner's native/explanatory language here, English is
-  // the target he's practicing (in vocabExamples, dialogue, etc). No 🔊
-  // button on the mission itself since it's not English text to pronounce
-  // (per-word/example audio elsewhere is unaffected).
-  const missionText = detail.promptEn || detail.prompt;
+  // Mission instructions render primarily in French — French is the
+  // learner's native/explanatory language here. When a day also defines
+  // promptEn, a muted English line appears underneath so Pierrot can read
+  // the mission in both languages without needing to translate himself.
   const isStoryDay = !!(detail.chapters && detail.chapters.length);
 
   document.getElementById("day-stamp").textContent = `Jour ${day}`;
   document.getElementById("block-title").textContent = `${block.title} (jours ${block.range[0]}–${block.range[1]})`;
   document.getElementById("block-grammar").textContent = detail.grammar;
-  document.getElementById("today-prompt").textContent = missionText;
+  document.getElementById("today-prompt").textContent = detail.prompt;
   document.getElementById("prompt-label").textContent = "🎤 Mission du jour";
+  setBilingualLine("today-prompt-en", document.getElementById("today-prompt"), detail.promptEn);
 
   const speakPromptBtn = document.getElementById("speak-prompt");
   if (speakPromptBtn) speakPromptBtn.style.display = "none";
-
-  const existingPromptEn = document.getElementById("today-prompt-en");
-  if (existingPromptEn) existingPromptEn.remove();
 
   document.getElementById("streak-number").textContent = computeStreak();
   document.getElementById("jump-input").value = day;
@@ -360,14 +383,17 @@ function renderToday() {
   examplesHeading.style.display = grammarExamples.length ? "" : "none";
 
   // Mini dialogue — a short natural back-and-forth using today's grammar,
-  // rendered as alternating speaker bubbles (A on the left, B on the right).
+  // rendered as alternating speaker bubbles (first speaker on the left,
+  // second on the right). Alternation is by line order, not by matching a
+  // literal "A" string, so speaker labels can be real names (e.g. "Hettia"
+  // / "Pierrot") and still alternate sides correctly.
   const dialogueEl = document.getElementById("today-dialogue");
   const dialogueHeading = document.getElementById("today-dialogue-heading");
   dialogueEl.innerHTML = "";
   const dialogue = detail.dialogue || [];
-  dialogue.forEach(([speaker, fr, en]) => {
+  dialogue.forEach(([speaker, fr, en], i) => {
     const line = document.createElement("div");
-    line.className = `dialogue-line speaker-${speaker === "A" ? "a" : "b"}`;
+    line.className = `dialogue-line speaker-${i % 2 === 0 ? "a" : "b"}`;
     const bubble = document.createElement("div");
     bubble.className = "dialogue-bubble";
     const label = document.createElement("span");
@@ -403,10 +429,10 @@ function renderToday() {
   // practiced), stored directly in didYouNotice.
   const noticeEl = document.getElementById("today-notice");
   if (detail.didYouNotice) {
-    const noticeText = detail.didYouNoticeEn || detail.didYouNotice;
     noticeEl.innerHTML = `<p class="notice-label"></p><p class="notice-text"></p>`;
     noticeEl.querySelector(".notice-label").textContent = "💡 Le sais-tu ?";
-    noticeEl.querySelector(".notice-text").textContent = noticeText;
+    noticeEl.querySelector(".notice-text").textContent = detail.didYouNotice;
+    setBilingualLine("today-notice-en", noticeEl.querySelector(".notice-text"), detail.didYouNoticeEn);
     noticeEl.style.display = "";
   } else {
     noticeEl.innerHTML = "";
@@ -421,8 +447,9 @@ function renderToday() {
       mistakeEl.innerHTML = `
         <p class="notice-label">⚠️ Erreur fréquente d'un francophone</p>
         <p class="notice-text"><span class="mistake-wrong">❌ ${detail.mistake.wrong}</span> → <span class="mistake-right">✅ ${detail.mistake.right}</span></p>
-        <p class="notice-text">${detail.mistake.note}</p>
+        <p class="notice-text" id="today-mistake-note">${detail.mistake.note}</p>
       `;
+      setBilingualLine("today-mistake-note-en", mistakeEl.querySelector("#today-mistake-note"), detail.mistake.noteEn);
       mistakeEl.style.display = "";
     } else {
       mistakeEl.innerHTML = "";
