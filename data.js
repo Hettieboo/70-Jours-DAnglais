@@ -518,26 +518,26 @@ const DAY_DETAILS = {
 const MESSAGES = {
   1: `Bienvenue, mon amour. 💚
 
-Merci d'avoir accepté de vivre cette petite aventure avec moi. Chaque leçon terminée est un pas de plus vers un avenir où nous pourrons partager encore plus de nous-mêmes. Je t'aime et je suis tellement heureuse que tu sois là.`,
+Merci d'avoir dit oui à cette petite aventure avec moi. Chaque leçon que tu termines, c'est un pas de plus vers un avenir où on pourra partager encore plus de nous-mêmes. Je t'aime, et je suis tellement heureuse que tu sois là.`,
 
   2: `J'espère que ta journée a été douce avec toi.
 
-Et si ce n'est pas le cas, j'espère que ce message te rappelle que quelqu'un pense à toi, croit en toi et aimerait pouvoir te serrer très fort dans ses bras.`,
+Et si ce n'est pas le cas, j'espère que ce message te rappelle qu'il y a quelqu'un qui pense à toi, qui croit en toi, et qui aimerait pouvoir te serrer très fort dans ses bras.`,
 
-  3: `Si l'apprentissage te semble difficile aujourd'hui, souviens-toi d'une chose.
+  3: `Si apprendre te semble difficile aujourd'hui, souviens-toi d'une chose.
 
 Je ne t'aime pas parce que tu es doué en anglais.
 Je t'aime parce que tu es toi.
 
-Tout le reste n'est que du bonus. ❤️`,
+Tout le reste, ce n'est qu'un bonus. ❤️`,
 
-  4: `Chaque nouveau mot que tu apprends est un petit pont supplémentaire entre nos deux mondes.
+  4: `Chaque nouveau mot que tu apprends, c'est un petit pont de plus entre nos deux mondes.
 
-Un jour, nous rirons, nous nous raconterons des histoires, nous nous taquinerons et nous rêverons ensemble — aussi bien en anglais qu'en français.
+Un jour, on rira, on se racontera des histoires, on se taquinera, et on rêvera ensemble, en anglais comme en français. Rien que d'y penser, ça me fait sourire.`,
 
-Rien que d'y penser, ça me fait sourire.`,
+  5: `Parfois, j'aimerais que tu puisses emprunter mes yeux, juste une minute.
 
-  5: `Tu me manques et je t'aime profondément. Continue comme ça, mon amour.`,
+Tu verrais enfin l'homme gentil, intelligent, drôle et merveilleux que je vois, moi, tous les jours.`,
 
   6: `Tu me manques aujourd'hui.
 
@@ -545,91 +545,95 @@ Alors en attendant de pouvoir te voler un câlin, laisse ce petit message te ten
 
   7: `Déjà une semaine entière !
 
-Je suis tellement fière de toi, mon amour et mon meilleur ami.`,
+Je suis fière de toi — pas parce que tu es parfait, mais parce que tu as continué. C'est une des choses que je préfère chez toi.`,
 
-  8: `Tes bras autour de moi me manquent.
+  8: `Où que tu sois en ce moment, j'espère que tu souris, ne serait-ce qu'une seconde.
 
-J'espère que tu souris en repensant à nos moments ensemble.`,
+Parce que quelque part, moi aussi je suis probablement en train de sourire... juste parce que j'ai pensé à toi.`,
 
-  9: `Tu es l'homme le plus formidable que j'aie jamais connu.
+  9: `Certaines leçons te sembleront faciles.
 
-Je t'aime profondément, Pierrot.`,
+D'autres non.
+
+Mais chaque jour où tu choisis de revenir, ça dit quelque chose de beau sur toi : tu n'abandonnes pas.`,
 
   10: `Dix jours.
 
 Tu te rends compte ?
 
-Si j'étais là, je fêterais ça avec un long baiser... et peut-être une douche ensemble, juste parce que j'adore être près de toi. ❤️`,
+Si j'étais là, je fêterais ça avec un baiser... et peut-être un deuxième, juste parce que je suis fière de toi. 💚`,
 
   11: `Tu sais ce que j'adore ?
 
-L'idée qu'un jour, nous regarderons cette application ensemble et que nous en rirons, parce que l'anglais sera devenu tout à fait naturel pour toi.`,
+L'idée qu'un jour, on regardera cette appli ensemble, et qu'on rira parce que l'anglais sera devenu tellement naturel pour toi.`,
 
   12: `J'espère que tu n'oublieras jamais ça.
 
-Tu ne fais jamais ça tout seul.
+Tu ne fais jamais ça seul.
 
-Pour chaque leçon terminée, je t'applaudis en silence, où que je sois.`,
+Chaque leçon que tu termines, je t'applaudis en silence, où que je sois.`,
 
-  13: `Ferme les yeux un instant.
+  13: `Ferme les yeux une seconde.
 
-Imagine-moi prendre ton visage entre mes mains, te sourire et te dire :
+Imagine-moi en train de prendre ton visage entre mes mains, te souriant, et te disant :
 
 « Tu vas y arriver, mon amour. »
 
-Parce que c'est exactement ce que je ferais.`,
+Parce que c'est exactement ce que je serais en train de faire.`,
 
   14: `J'adore imaginer nos futures conversations.
 
 Parfois en anglais.
 Parfois en français.
-Parfois dans un drôle de mélange des deux.
+Parfois dans un mélange rigolo des deux.
 
 Tant qu'elles sont avec toi, je suis heureuse.`,
 
-  15: `Si la journée te semble lourde, ne cherche pas à être exceptionnel.
+  15: `Si aujourd'hui te semble lourd, ne te soucie pas d'être exceptionnel.
 
 Fais juste un petit pas.
 
-Demain prendra soin de lui-même.`,
+Demain s'occupera de lui-même.`,
 
-  16: `Ce que j'aime le plus chez toi, c'est que tu continues d'essayer, même quand quelque chose te met mal à l'aise.
+  16: `Une des choses que je préfère chez toi, c'est que tu continues d'essayer, même quand quelque chose te met mal à l'aise.
 
-Je trouve cette détermination tranquille tellement séduisante.`,
+Cette détermination tranquille, je la trouve incroyablement attirante.`,
 
-  17: `Voici le petit rappel du jour.
+  17: `Voici le rappel du jour.
 
 Tu es aimé.
 Tu es apprécié.
-Tu es assez, tel que tu es.
+Tu es suffisant, tel que tu es.
 
 Même avant la leçon d'aujourd'hui.`,
 
-  18: `La distance est une chose étrange.
+  18: `La distance, c'est étrange.
 
-Cela signifie que je ne peux pas te tenir la main aujourd'hui...
+Ça veut dire que je ne peux pas te tenir la main aujourd'hui...
 
-Mais cela ne m'empêchera jamais de t'aimer ou d'être fière de toi.`,
+Mais ça ne m'empêchera jamais de t'aimer, ni d'être fière de toi.`,
 
-  19: `Tu as presque atteint les vingt jours.
+  19: `Tu es presque à vingt jours.
 
 Ce n'est pas de la chance.
 
 C'est de la constance.
 
-Et cette constance est l'une des raisons pour lesquelles je crois que tu peux accomplir tout ce que tu entreprends.`,
+Et cette constance, c'est une des raisons pour lesquelles je crois que tu peux accomplir tout ce que tu te mets en tête.`,
 
   20: `Vingt jours ensemble.
 
-Je suis fière de toi.
+Je suis incroyablement fière de toi.
 
-Merci de me faire confiance, de partager ce cheminement avec moi et de me faire une place dans ta vie.
+Merci de me faire confiance, de partager ce chemin avec moi, et de me faire une place dans ta vie.
 
-J'ai hâte d'être au jour où je n'aurai plus besoin de t'envoyer de petits messages via une application, car je serai juste là, à tes côtés, pour célébrer chaque petite victoire avec toi.
+J'ai hâte au jour où je n'aurai plus besoin de t'envoyer des petits messages par une appli, parce que je serai juste à côté de toi, à célébrer chaque petite victoire avec toi.
 
 D'ici là...
 
 Sache que tu es profondément aimé.
 Toujours. 💚`,
-}; fois, mon amour. 💚";
+};
+
+const DEFAULT_MESSAGE = "Je suis fière de toi. Un jour à la fois, mon amour. 💚";
 
