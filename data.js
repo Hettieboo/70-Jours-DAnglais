@@ -256,7 +256,6 @@ const VOCAB = {
     ["how", "comment"],
     ["how much", "combien"],
     ["which one", "lequel"],
-    ["[question marker]", "est-ce que"],
   ],
   "Temps & quantité": [
     ["today", "aujourd'hui"],
