@@ -650,12 +650,12 @@ Plus courageuse.
 
 Merci de faire ressortir cette version de moi.`,
 
-  9: 'Je suis fière de toi.
+  9: `Je suis fière de toi.
 Pas seulement pour les choses que tu accomplis.
 
-Mais pour la façon dont tu choisis d'avancer, même quand la vie est compliquée.'
+Mais pour la façon dont tu choisis d'avancer, même quand la vie est compliquée.
 
-C'est une qualité que j'admire profondément..`,
+C'est une qualité que j'admire profondément.`,
 
   10: `Dix jours.
 
