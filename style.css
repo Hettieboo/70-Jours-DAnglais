@@ -339,6 +339,7 @@ h3 {
    lesson actually functioning in a real exchange, not just in the grammar
    examples box above. */
 .grammar-highlight {
+  background: none;
   color: var(--accent);
   font-weight: 800;
 }

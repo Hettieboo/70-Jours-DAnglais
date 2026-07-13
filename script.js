@@ -22,15 +22,19 @@ function loadEnglishVoice() {
     englishVoices.find(v => v.lang === "en-US") ||
     englishVoices[0] ||
     null;
-  // Best-effort gender match for dialogue speakers, based on common voice
-  // naming conventions (e.g. "Google UK English Female", "Microsoft David").
-  // Not all browsers/OSes expose gendered voice names, so these can end up
-  // null — dialogue speak buttons fall back to the default englishVoice
-  // whenever that happens.
+  // Best-effort gender match for dialogue speakers. Chrome labels voices
+  // literally ("Google UK English Female/Male"), but Safari/macOS/iOS and
+  // Windows use plain names (Samantha, Daniel, Zira, David...) with no
+  // gender word at all — so we also match against a list of common voice
+  // names across platforms. Still not guaranteed on every device; dialogue
+  // speak buttons fall back to the single default voice when no match is
+  // found.
+  const FEMALE_NAME_HINTS = /female|samantha|victoria|karen|moira|tessa|fiona|kate|serena|susan|zira|hazel|allison|ava|kathy|shelley|catherine|joanna|kendra|salli|nicky|amy|emma|joanie|flo|princess/i;
+  const MALE_NAME_HINTS = /\bmale\b|daniel|alex|fred|oliver|arthur|ralph|david|george|thomas|aaron|nathan|justin|eric|kevin|matthew|brian|guy(?!\w)|james|mark|gordon|rishi/i;
   englishVoiceFemale =
-    englishVoices.find(v => /female/i.test(v.name)) || null;
+    englishVoices.find(v => FEMALE_NAME_HINTS.test(v.name)) || null;
   englishVoiceMale =
-    englishVoices.find(v => /male/i.test(v.name) && !/female/i.test(v.name)) || null;
+    englishVoices.find(v => MALE_NAME_HINTS.test(v.name) && !FEMALE_NAME_HINTS.test(v.name)) || null;
 }
 
 if (window.speechSynthesis) {
@@ -429,11 +433,13 @@ function renderToday() {
     btn.className = "speak-btn small";
     btn.textContent = "🔊";
     btn.setAttribute("aria-label", `Écouter : ${stripHtml(fr)}`);
-    const speakerVoice =
-      speaker === "Hettia" ? englishVoiceFemale :
-      speaker === "Pierrot" ? englishVoiceMale :
-      null;
-    btn.onclick = () => speak(fr, speakerVoice);
+    btn.onclick = () => {
+      const speakerVoice =
+        speaker === "Hettia" ? englishVoiceFemale :
+        speaker === "Pierrot" ? englishVoiceMale :
+        null;
+      speak(fr, speakerVoice);
+    };
     bubble.appendChild(label);
     bubble.appendChild(text);
     bubble.appendChild(btn);
@@ -529,7 +535,13 @@ function renderToday() {
     body.className = "conj-table-body";
 
     const tableEl = document.createElement("table");
-    table.rows.forEach(([pronoun, form]) => {
+    // Rows are normally [pronoun, form] and the two get concatenated for
+    // speech (e.g. "I" + "am" -> "I am"). Some tables use the second column
+    // for a French grammar explanation instead of an actual conjugated form
+    // (e.g. politeFormulas, imperativeForms) — those rows carry an explicit
+    // 3rd element, speakOverride, which is spoken as-is instead, so the
+    // explanation never gets read aloud.
+    table.rows.forEach(([pronoun, form, speakOverride]) => {
       const tr = document.createElement("tr");
       const tdP = document.createElement("td");
       tdP.className = "conj-pronoun";
@@ -541,8 +553,12 @@ function renderToday() {
       const btn = document.createElement("button");
       btn.className = "speak-btn";
       btn.textContent = "🔊";
-      btn.setAttribute("aria-label", `Écouter ${pronoun} ${form}`);
+      btn.setAttribute("aria-label", speakOverride ? `Écouter : ${speakOverride}` : `Écouter ${pronoun} ${form}`);
       btn.onclick = () => {
+        if (speakOverride) {
+          speak(speakOverride);
+          return;
+        }
         const cleanPronoun = pronoun.split("/")[0].replace(/[()→]/g, "").trim();
         let phrase;
         if (!cleanPronoun) phrase = form;
