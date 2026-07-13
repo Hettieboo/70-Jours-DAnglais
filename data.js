@@ -416,8 +416,8 @@ const VOCAB = {
 // blocks rather than conjugated piece by piece. Ported directly from the
 // French app's real CHUNKS (40 phrases) and flipped to [English, French].
 const CHUNKS = [
-    ["I would like...", "Je voudrais..."],
-    ["I would like (softer)...", "J'aimerais..."],
+    ["I would like (s'utilise pour faire une demande polie ou exprimer ce que l'on souhaite obtenir)...", "Je voudrais..."],
+    ["I would love to (s'utilise pour exprimer un souhait, une envie ou un désir.)...", "J'aimerais..."],
     ["Can you...", "Est-ce que tu peux..."],
     ["Could you...", "Est-ce que tu pourrais..."],
     ["What do you think about it?", "Qu'est-ce que tu en penses ?"],
@@ -446,7 +446,7 @@ const CHUNKS = [
     ["Let me explain.", "Laisse-moi t'expliquer."],
     ["I'm proud of you.", "Je suis fier/fière de toi."],
     ["Congratulations!", "Félicitations !"],
-    ["Good luck / hang in there.", "Bon courage."],
+    ["Good luck", "Bon courage."],
     ["Take care of yourself.", "Prends soin de toi."],
     ["See you soon (later today).", "À tout à l'heure."],
     ["When are we seeing each other?", "On se voit quand ?"],
@@ -609,42 +609,53 @@ const MESSAGES = {
 
 Merci d'avoir dit oui à cette petite aventure avec moi. Chaque leçon que tu termines, c'est un pas de plus vers un avenir où on pourra partager encore plus de nous-mêmes. Je t'aime, et je suis tellement heureuse que tu sois là.`,
 
-  2: `J'espère que ta journée a été douce avec toi.
+  2: `J'espère qu'il y aura un jour où tu ne douteras plus jamais de l'amour que j'ai pour toi.
 
-Et si ce n'est pas le cas, j'espère que ce message te rappelle qu'il y a quelqu'un qui pense à toi, qui croit en toi, et qui aimerait pouvoir te serrer très fort dans ses bras.`,
+En attendant, je te le rappellerai autant de fois qu'il le faudra.
 
-  3: `Si apprendre te semble difficile aujourd'hui, souviens-toi d'une chose.
+Je t'aime profondément..`,
 
-Je ne t'aime pas parce que tu es doué en anglais.
-Je t'aime parce que tu es toi.
+  3: `Tu as apporté tellement de paix dans mon cœur.
 
-Tout le reste, ce n'est qu'un bonus. ❤️`,
+J'espère qu'un jour tu réaliseras à quel point ta présence rend ma vie plus belle. ❤️`,
 
-  4: `Chaque nouveau mot que tu apprends, c'est un petit pont de plus entre nos deux mondes.
+  4: `J'aime la personne que tu es aujourd'hui.
 
-Un jour, on rira, on se racontera des histoires, on se taquinera, et on rêvera ensemble, en anglais comme en français. Rien que d'y penser, ça me fait sourire.`,
+Et j'aime aussi la personne que tu es encore en train de devenir.
 
-  5: `Parfois, j'aimerais que tu puisses emprunter mes yeux, juste une minute.
+J'aurai toujours envie de marcher à tes côtés.`,
 
-Tu verrais enfin l'homme gentil, intelligent, drôle et merveilleux que je vois, moi, tous les jours.`,
+  5: `Tu n'as jamais besoin d'être parfait pour mériter mon amour.
 
-  6: `Tu me manques aujourd'hui.
+Tu l'as déjà.
 
-Alors en attendant de pouvoir te voler un câlin, laisse ce petit message te tenir compagnie.`,
+Et rien de ce que tu réussiras ou manqueras ne pourra changer cela.
+.`,
+
+  6: `J'espère que cette application t'apprendra l'anglais.
+
+Mais j'espère surtout qu'elle te rappellera chaque jour combien tu es aimé.`,
 
   7: `Déjà une semaine entière !
 
 Je suis fière de toi — pas parce que tu es parfait, mais parce que tu as continué. C'est une des choses que je préfère chez toi.`,
 
-  8: `Où que tu sois en ce moment, j'espère que tu souris, ne serait-ce qu'une seconde.
+  8: `Tu me donnes envie d'aimer mieux.
 
-Parce que quelque part, moi aussi je suis probablement en train de sourire... juste parce que j'ai pensé à toi.`,
+D'être plus patiente.
 
-  9: `Certaines leçons te sembleront faciles.
+Plus douce.
 
-D'autres non.
+Plus courageuse.
 
-Mais chaque jour où tu choisis de revenir, ça dit quelque chose de beau sur toi : tu n'abandonnes pas.`,
+Merci de faire ressortir cette version de moi.`,
+
+  9: 'Je suis fière de toi.
+Pas seulement pour les choses que tu accomplis.
+
+Mais pour la façon dont tu choisis d'avancer, même quand la vie est compliquée.'
+
+C'est une qualité que j'admire profondément..`,
 
   10: `Dix jours.
 
@@ -652,9 +663,11 @@ Tu te rends compte ?
 
 Si j'étais là, je fêterais ça avec un baiser... et peut-être un deuxième, juste parce que je suis fière de toi. 💚`,
 
-  11: `Tu sais ce que j'adore ?
+  11: `Merci d'être l'homme qui me donne envie de croire encore plus en l'amour.
 
-L'idée qu'un jour, on regardera cette appli ensemble, et qu'on rira parce que l'anglais sera devenu tellement naturel pour toi.`,
+Je ne considère jamais ton amour comme un acquis.
+
+C'est un cadeau que je chérirai toujours.`,
 
   12: `J'espère que tu n'oublieras jamais ça.
 
@@ -670,31 +683,33 @@ Imagine-moi en train de prendre ton visage entre mes mains, te souriant, et te d
 
 Parce que c'est exactement ce que je serais en train de faire.`,
 
-  14: `J'adore imaginer nos futures conversations.
+  14: `J'espère qu'un jour tu verras en toi tout ce que moi je vois déjà.
 
-Parfois en anglais.
-Parfois en français.
-Parfois dans un mélange rigolo des deux.
+Parce que je vois un homme bon.
 
-Tant qu'elles sont avec toi, je suis heureuse.`,
+Un homme courageux.
 
-  15: `Si aujourd'hui te semble lourd, ne te soucie pas d'être exceptionnel.
+Un homme profondément aimable.`,
 
-Fais juste un petit pas.
+  15: `Tu as une douceur qui me touche profondément.
 
-Demain s'occupera de lui-même.`,
+J'espère que la vie ne te l'enlèvera jamais.
 
-  16: `Une des choses que je préfère chez toi, c'est que tu continues d'essayer, même quand quelque chose te met mal à l'aise.
+Parce que c'est une des plus belles choses chez toi.`,
 
-Cette détermination tranquille, je la trouve incroyablement attirante.`,
+  16: `Je ne peux pas te promettre que la vie sera toujours facile.
 
-  17: `Voici le rappel du jour.
+Mais je peux te promettre une chose.
 
-Tu es aimé.
-Tu es apprécié.
-Tu es suffisant, tel que tu es.
+Je choisirai toujours de marcher à tes côtés.`,
 
-Même avant la leçon d'aujourd'hui.`,
+  17: `Je me demande parfois ce que j'ai fait pour avoir la chance de te rencontrer.
+
+Puis je souris.
+
+Parce qu'au fond, peu importe la réponse.
+
+L'important, c'est que tu sois là.`,
 
   18: `La distance, c'est étrange.
 
