@@ -9,16 +9,28 @@ const STORAGE_KEYS = {
 };
 
 let englishVoice = null;
+let englishVoiceFemale = null;
+let englishVoiceMale = null;
 
 /* ---------- Text-to-speech ---------- */
 
 function loadEnglishVoice() {
   const voices = window.speechSynthesis ? window.speechSynthesis.getVoices() : [];
+  const englishVoices = voices.filter(v => v.lang && v.lang.startsWith("en"));
   englishVoice =
-    voices.find(v => v.lang === "en-GB") ||
-    voices.find(v => v.lang === "en-US") ||
-    voices.find(v => v.lang && v.lang.startsWith("en")) ||
+    englishVoices.find(v => v.lang === "en-GB") ||
+    englishVoices.find(v => v.lang === "en-US") ||
+    englishVoices[0] ||
     null;
+  // Best-effort gender match for dialogue speakers, based on common voice
+  // naming conventions (e.g. "Google UK English Female", "Microsoft David").
+  // Not all browsers/OSes expose gendered voice names, so these can end up
+  // null — dialogue speak buttons fall back to the default englishVoice
+  // whenever that happens.
+  englishVoiceFemale =
+    englishVoices.find(v => /female/i.test(v.name)) || null;
+  englishVoiceMale =
+    englishVoices.find(v => /male/i.test(v.name) && !/female/i.test(v.name)) || null;
 }
 
 if (window.speechSynthesis) {
@@ -26,16 +38,22 @@ if (window.speechSynthesis) {
   window.speechSynthesis.onvoiceschanged = loadEnglishVoice;
 }
 
-function speak(text) {
+// Removes HTML markup (e.g. the <mark> tags used for grammar highlights)
+// so displayed text can safely be reused for speech and aria-labels.
+function stripHtml(text) {
+  return text.replace(/<[^>]*>/g, "");
+}
+
+function speak(text, voice) {
   if (!window.speechSynthesis) {
     alert("La synthèse vocale n'est pas disponible dans ce navigateur.");
     return;
   }
   window.speechSynthesis.cancel();
-  const cleanText = text.replace(/\([^)]*\)/g, "").split("/")[0].trim();
+  const cleanText = stripHtml(text).replace(/\([^)]*\)/g, "").split("/")[0].trim();
   const utterance = new SpeechSynthesisUtterance(cleanText);
   utterance.lang = "en-GB";
-  if (englishVoice) utterance.voice = englishVoice;
+  utterance.voice = voice || englishVoice;
   utterance.rate = 0.92;
   window.speechSynthesis.speak(utterance);
 }
@@ -410,8 +428,12 @@ function renderToday() {
     const btn = document.createElement("button");
     btn.className = "speak-btn small";
     btn.textContent = "🔊";
-    btn.setAttribute("aria-label", `Écouter : ${fr}`);
-    btn.onclick = () => speak(fr);
+    btn.setAttribute("aria-label", `Écouter : ${stripHtml(fr)}`);
+    const speakerVoice =
+      speaker === "Hettia" ? englishVoiceFemale :
+      speaker === "Pierrot" ? englishVoiceMale :
+      null;
+    btn.onclick = () => speak(fr, speakerVoice);
     bubble.appendChild(label);
     bubble.appendChild(text);
     bubble.appendChild(btn);
