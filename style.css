@@ -312,20 +312,36 @@ h3 {
 .dialogue-speaker {
   font-family: 'Inter', sans-serif;
   font-weight: 700;
-  font-size: 11px;
+  font-size: 9px;
+  letter-spacing: -0.02em;
   color: var(--page-bg);
   background: var(--accent);
   flex-shrink: 0;
-  width: 20px;
-  height: 20px;
+  box-sizing: border-box;
+  width: 46px;
+  height: 46px;
+  padding: 0 3px;
   border-radius: 50%;
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  line-height: 1;
 }
 .dialogue-text { flex: 1; }
 .dialogue-text .ex-fr { font-size: 14px; }
 .dialogue-text .ex-en { font-size: 12px; }
+
+/* Highlights the day's target grammar structure inline within dialogue
+   lines (e.g. "going to", "just", imperatives), so the learner can see the
+   lesson actually functioning in a real exchange, not just in the grammar
+   examples box above. */
+.grammar-highlight {
+  color: var(--accent);
+  font-weight: 800;
+}
 
 @media (max-width: 640px) {
   .dialogue-bubble { max-width: 92%; }

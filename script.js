@@ -348,6 +348,11 @@ function renderToday() {
 
   document.getElementById("day-stamp").textContent = `Jour ${day}`;
   document.getElementById("block-title").textContent = `${block.title} (jours ${block.range[0]}–${block.range[1]})`;
+  setBilingualLine(
+    "block-title-en",
+    document.getElementById("block-title"),
+    block.titleEn ? `${block.titleEn} (days ${block.range[0]}–${block.range[1]})` : null
+  );
   document.getElementById("block-grammar").textContent = detail.grammar;
   document.getElementById("today-prompt").textContent = detail.prompt;
   document.getElementById("prompt-label").textContent = "🎤 Mission du jour";
