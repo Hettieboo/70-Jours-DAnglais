@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="fr" translate="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="google" content="notranslate">
+<title>English Learning App — 70 jours d'anglais</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,72,400;0,72,600;1,72,500&family=Inter:wght@400;500;600&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="notebook">
+  <div class="margin-rule"></div>
+
+  <header class="page-header">
+    <p class="eyebrow">english learning app</p>
+    <h1>70 jours d'anglais</h1>
+    <p class="subtitle">Apprends à parler anglais naturellement, pour la vraie vie — pas pour un examen.</p>
+  </header>
+
+  <nav class="tabs" id="tabs">
+    <button class="tab active" data-tab="today">Aujourd'hui</button>
+    <button class="tab" data-tab="vocab">Vocabulaire</button>
+    <button class="tab" data-tab="phrases">Phrases</button>
+    <button class="tab" data-tab="pronunciation">Prononciation</button>
+    <button class="tab" data-tab="progress">Progrès</button>
+  </nav>
+
+  <main>
+
+    <section id="today" class="panel active">
+      <div class="stamp" id="day-stamp">Jour 1</div>
+      <div class="today-grid">
+        <div class="today-main" id="today-main" style="--block-color: #5B8DB8;">
+          <h2 id="block-title">—</h2>
+          <p class="meta"><strong>Grammaire :</strong> <span id="block-grammar"></span></p>
+
+          <div id="prompt-section">
+            <div class="prompt-box">
+              <p class="prompt-label" id="prompt-label">🎤 Mission du jour</p>
+              <p class="prompt-text" id="today-prompt"></p>
+              <button class="speak-btn small" id="speak-prompt">🔊 écouter</button>
+            </div>
+          </div>
+
+          <div id="learning-section">
+            <div id="conjugation-tables"></div>
+
+            <h4 class="learning-subhead" id="today-vocab-examples-heading">Exemples de grammaire<span class="subhead-en">Grammar examples</span></h4>
+            <div id="today-vocab-examples" class="example-sentence-list"></div>
+
+            <h4 class="learning-subhead" id="today-dialogue-heading">Mini dialogue<span class="subhead-en">Short conversation</span></h4>
+            <div id="today-dialogue" class="dialogue-box"></div>
+
+            <h4 class="learning-subhead" id="today-listening-heading">Écoute et répète (x2)<span class="subhead-en">Listen &amp; repeat (x2)</span></h4>
+            <div id="today-listening" class="example-sentence-list"></div>
+
+            <div id="today-notice" class="notice-box"></div>
+            <div id="today-mistake" class="notice-box mistake-box"></div>
+          </div>
+
+          <div id="chapter-banner"></div>
+
+          <h3 id="session-heading">
+            Séance du jour<span class="subhead-en">Today's session</span> (20–28 min)
+            <span class="checklist-progress" id="checklist-progress">0/4</span>
+          </h3>
+          <ul class="checklist" id="session-checklist"></ul>
+
+          <h3><span id="notes-heading-fr">Tes notes / ta réponse du jour</span><span class="subhead-en" id="notes-heading-en">Your notes / today's answer</span></h3>
+          <textarea id="day-notes" class="notes-pad" placeholder="Écris ta réponse à la question du jour, ou prends des notes ici..."></textarea>
+
+          <div class="hettia-note" id="hettia-note">
+            <button class="hettia-note-btn" id="hettia-note-btn" type="button">💌 Message from Hettia</button>
+            <p class="hettia-note-text" id="hettia-note-text" hidden></p>
+          </div>
+
+          <div class="day-controls">
+            <button class="primary-btn" id="complete-day-btn">Marquer le jour terminé →</button>
+            <details class="day-jump">
+              <summary>Aller à un autre jour</summary>
+              <div class="day-jump-inner">
+                <label for="jump-input">Jour</label>
+                <input type="number" id="jump-input" min="1" max="70" value="1">
+                <button id="jump-btn">OK</button>
+              </div>
+            </details>
+          </div>
+        </div>
+        <div class="today-side">
+          <p class="side-label">Série actuelle</p>
+          <p class="streak-number" id="streak-number">0</p>
+          <p class="side-sub">jours d'affilée</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="vocab" class="panel">
+      <h2>Les ~270 mots du cœur</h2>
+      <p class="intro-text">Organisés par fonction, pas par fréquence brute. Clique le haut-parleur pour entendre la prononciation.</p>
+      <div id="vocab-list"></div>
+    </section>
+
+    <section id="phrases" class="panel">
+      <h2>40 formules à retenir en bloc</h2>
+      <p class="intro-text">Ne les conjugue pas dans ta tête — apprends-les comme des mots entiers.</p>
+      <div id="phrases-list" class="card-list"></div>
+    </section>
+
+    <section id="pronunciation" class="panel">
+      <h2>Les sons qui posent problème</h2>
+      <p class="intro-text">Un schéma de prononciation à la fois, valable pour tous les mots qui suivent ce patron.</p>
+      <div id="pronunciation-list"></div>
+    </section>
+
+    <section id="progress" class="panel">
+      <h2>Les 70 jours</h2>
+      <div class="grid-60" id="grid-60"></div>
+      <button class="reset-btn" id="reset-btn">Réinitialiser la progression</button>
+    </section>
+
+  </main>
+
+  <footer class="page-footer">
+    <p>Pas de connexion nécessaire — tout est stocké dans ton navigateur.</p>
+    <p class="footer-dedication">Made with love for my love, Pierrot 💚</p>
+  </footer>
+</div>
+
+<script src="data.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
