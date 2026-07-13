@@ -553,6 +553,23 @@ function renderToday() {
   const sessionHeadingEl = document.getElementById("session-heading");
   if (sessionHeadingEl) sessionHeadingEl.style.display = isStoryDay ? "none" : "";
 
+  // "Message from Hettia" — a personal note, available any time on the
+  // current day (not gated behind completion; see MESSAGES comment in
+  // data.js for why). Collapses back to hidden on every day change so a
+  // message revealed on one day doesn't stay open when jumping to another.
+  const noteBtn = document.getElementById("hettia-note-btn");
+  const noteText = document.getElementById("hettia-note-text");
+  noteText.hidden = true;
+  noteText.textContent = "";
+  noteBtn.onclick = () => {
+    if (noteText.hidden) {
+      noteText.textContent = MESSAGES[day] || DEFAULT_MESSAGE;
+      noteText.hidden = false;
+    } else {
+      noteText.hidden = true;
+    }
+  };
+
   const checklistEl = document.getElementById("session-checklist");
   const checklistProgressEl = document.getElementById("checklist-progress");
 
