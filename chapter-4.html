@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chapter 4 — At the Grandparents' House | 70 jours d'anglais</title>
+<style>
+  body { margin: 0; padding: 24px 16px; background: #1B2438; }
+  .sjf-root {
+    --bg: #1B2438; --panel: #232D45; --panel-2: #2A3550; --ink: #F2EAD8;
+    --ink-dim: #B9C0D4; --gold: #D4A93E; --wine: #D46A52; --line: rgba(242,234,216,0.14);
+    font-family: 'Lora', Georgia, serif; background: var(--bg); color: var(--ink);
+    border-radius: 18px; padding: 0; max-width: 760px; margin: 0 auto; overflow: hidden;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.35);
+  }
+  .sjf-root * { box-sizing: border-box; }
+  .sjf-head { padding: 36px 40px 28px; background: linear-gradient(180deg, #212B44 0%, #1B2438 100%); border-bottom: 1px solid var(--line); position: relative; }
+  .sjf-eyebrow { font-family: 'Inter', sans-serif; font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--gold); margin: 0 0 10px; }
+  .sjf-title { font-family: 'Fraunces', Georgia, serif; font-size: 34px; font-weight: 600; margin: 0 0 4px; color: var(--ink); }
+  .sjf-sub { font-style: italic; color: var(--ink-dim); margin: 0 0 20px; font-size: 15px; }
+  .sjf-dots { display: flex; gap: 6px; align-items: center; }
+  .sjf-dot { width: 7px; height: 7px; border-radius: 50%; background: rgba(242,234,216,0.18); }
+  .sjf-dot.done { background: var(--gold); }
+  .sjf-dots-label { font-family: 'Inter', sans-serif; font-size: 10.5px; color: var(--ink-dim); margin-left: 8px; letter-spacing: 0.03em; }
+  .sjf-tabs { display: flex; gap: 4px; padding: 14px 40px 0; background: var(--bg); }
+  .sjf-tab { font-family: 'Inter', sans-serif; font-size: 13px; padding: 9px 16px; border-radius: 8px 8px 0 0; cursor: pointer; color: var(--ink-dim); background: transparent; border: none; transition: color 0.15s ease; }
+  .sjf-tab.active { color: var(--ink); background: var(--panel); }
+  .sjf-body { background: var(--panel); padding: 30px 40px 10px; }
+  .sjf-pane { display: none; }
+  .sjf-pane.active { display: block; }
+  .sjf-p { margin: 0 0 16px; line-height: 1.75; font-size: 16.5px; color: var(--ink); }
+  .sjf-d { margin: 0 0 14px; line-height: 1.75; font-size: 16.5px; padding-left: 14px; border-left: 2px solid var(--line); }
+  .sjf-speaker { font-family: 'Inter', sans-serif; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--gold); display: block; margin-bottom: 3px; }
+  .voc { color: var(--wine); font-weight: 600; border-bottom: 1px dotted rgba(212,106,82,0.55); cursor: help; }
+  .sjf-recap { background: var(--panel-2); margin: 24px 0 0; padding: 26px 40px 34px; }
+  .sjf-recap h3 { font-family: 'Fraunces', Georgia, serif; font-size: 19px; color: var(--gold); margin: 0 0 4px; font-weight: 600; }
+  .sjf-recap p.hint { font-family: 'Inter', sans-serif; font-size: 12.5px; color: var(--ink-dim); margin: 0 0 16px; }
+  .sjf-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 8px 16px; }
+  .sjf-word { font-family: 'Inter', sans-serif; font-size: 13px; display: flex; justify-content: space-between; padding: 5px 0; border-bottom: 1px solid var(--line); color: var(--ink-dim); }
+  .sjf-word b { color: var(--ink); font-weight: 600; }
+  .sjf-word span.count { color: var(--gold); font-variant-numeric: tabular-nums; }
+  .sjf-note { font-family: 'Inter', sans-serif; font-size: 12px; color: var(--ink-dim); text-align: center; padding: 18px 40px 26px; background: var(--bg); }
+</style>
+</head>
+<body>
+<div class="sjf-root">
+  <div class="sjf-head">
+    <p class="sjf-eyebrow">70 jours d'anglais &middot; Chapter 4</p>
+    <h1 class="sjf-title">At the Grandparents' House</h1>
+    <p class="sjf-sub">Chez les grands-parents — Une nouvelle génération, un nouvel accueil.</p>
+    <div class="sjf-dots" id="sjf-dots"></div>
+  </div>
+
+  <div class="sjf-tabs">
+    <button class="sjf-tab active" onclick="sjfShowTab('en')">English</button>
+    <button class="sjf-tab" onclick="sjfShowTab('fr')">Français</button>
+  </div>
+
+  <div class="sjf-body">
+    <div class="sjf-pane active" id="sjf-en"></div>
+    <div class="sjf-pane" id="sjf-fr"></div>
+  </div>
+
+  <div class="sjf-recap">
+    <h3>Vocabulary from this chapter</h3>
+    <p class="hint">Words highlighted in the story above, with how many times each appears.</p>
+    <div class="sjf-grid" id="sjf-recap-grid"></div>
+  </div>
+
+  <div class="sjf-note">Continue to Chapter 5 in the app.</div>
+</div>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@500;600&family=Lora:ital,wght@0,400;0,500;1,400&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+<script>
+(function(){
+  const vocab = 
+[
+    ["to be","être"],
+    ["to have","avoir"],
+    ["to do","faire"],
+    ["make","faire"],
+    ["to go","aller"],
+    ["to be able to","pouvoir"],
+    ["to want","vouloir"],
+    ["to have to","devoir"],
+    ["to know","savoir"],
+    ["to see","voir"],
+    ["to take","prendre"],
+    ["to put","mettre"],
+    ["to say","dire"],
+    ["to come","venir"],
+    ["to be necessary","falloir"],
+    ["to like","aimer"],
+    ["love","aimer"],
+    ["to speak","parler"],
+    ["to think","penser"],
+    ["to believe","croire"],
+    ["to find","trouver"],
+    ["think","trouver"],
+    ["to give","donner"],
+    ["to ask","demander"],
+    ["to stay","rester"],
+    ["to pass","passer"],
+    ["spend time","passer"],
+    ["to arrive","arriver"],
+    ["to go out","sortir"],
+    ["to leave","partir"],
+    ["to understand","comprendre"],
+    ["to know","connaître"],
+    ["to feel","sentir"],
+    ["smell","sentir"],
+    ["to eat","manger"],
+    ["to drink","boire"],
+    ["to sleep","dormir"],
+    ["to work","travailler"],
+    ["to live","habiter"],
+    ["to listen","écouter"],
+    ["to watch","regarder"],
+    ["look","regarder"],
+    ["to wait","attendre"],
+    ["to try","essayer"],
+    ["to forget","oublier"],
+    ["to explain","expliquer"],
+    ["I","je"],
+    ["you","tu"],
+    ["he","il"],
+    ["she","elle"],
+    ["we","on"],
+    ["one","on"],
+    ["we","nous"],
+    ["you","vous"],
+    ["they","ils"],
+    ["they","elles"],
+    ["me","moi"],
+    ["you","toi"],
+    ["him","lui"],
+    ["the","le"],
+    ["him","le"],
+    ["it","le"],
+    ["the","la"],
+    ["her","la"],
+    ["it","la"],
+    ["the","les"],
+    ["them","les"],
+    ["my","mon"],
+    ["my","ma"],
+    ["my","mes"],
+    ["your","ton"],
+    ["your","ta"],
+    ["your","tes"],
+    ["his","son"],
+    ["her","son"],
+    ["his","sa"],
+    ["her","sa"],
+    ["his","ses"],
+    ["her","ses"],
+    ["our","notre"],
+    ["your","votre"],
+    ["their","leur"],
+    ["this","ce"],
+    ["that","ce"],
+    ["this","cette"],
+    ["that","cette"],
+    ["these","ces"],
+    ["who","qui"],
+    ["that","que"],
+    ["what","que"],
+    ["what","quoi"],
+    ["and","et"],
+    ["or","ou"],
+    ["but","mais"],
+    ["so","donc"],
+    ["because","parce que"],
+    ["so","alors"],
+    ["then","alors"],
+    ["also","aussi"],
+    ["then","puis"],
+    ["next","ensuite"],
+    ["like","comme"],
+    ["as","comme"],
+    ["if","si"],
+    ["when","quand"],
+    ["why","pourquoi"],
+    ["how","comment"],
+    ["how much","combien"],
+    ["which one","lequel"],
+    ["today","aujourd'hui"],
+    ["yesterday","hier"],
+    ["tomorrow","demain"],
+    ["now","maintenant"],
+    ["soon","bientôt"],
+    ["always","toujours"],
+    ["never","jamais"],
+    ["often","souvent"],
+    ["sometimes","parfois"],
+    ["already","déjà"],
+    ["still","encore"],
+    ["again","encore"],
+    ["right away","tout de suite"],
+    ["a lot","beaucoup"],
+    ["a little","un peu"],
+    ["enough","assez"],
+    ["too much","trop"],
+    ["little","peu"],
+    ["more","plus"],
+    ["less","moins"],
+    ["all","tout"],
+    ["all","tous"],
+    ["all","toute"],
+    ["all","toutes"],
+    ["nothing","rien"],
+    ["family","famille"],
+    ["mom","maman"],
+    ["dad","papa"],
+    ["brother","frère"],
+    ["sister","sœur"],
+    ["son","fils"],
+    ["daughter","fille"],
+    ["husband","mari"],
+    ["wife","femme"],
+    ["boyfriend","copain"],
+    ["girlfriend","copine"],
+    ["father-in-law","beau-père"],
+    ["mother-in-law","belle-mère"],
+    ["brother-in-law","beau-frère"],
+    ["sister-in-law","belle-sœur"],
+    ["grandparents","grands-parents"],
+    ["grandfather","grand-père"],
+    ["grandmother","grand-mère"],
+    ["child","enfant"],
+    ["baby","bébé"],
+    ["uncle","oncle"],
+    ["aunt","tante"],
+    ["cousin","cousin"],
+    ["cousin","cousine"],
+    ["love","amour"],
+    ["heart","cœur"],
+    ["together","ensemble"],
+    ["I miss you","tu me manques"],
+    ["to kiss","embrasser"],
+    ["hug","embrasser"],
+    ["hug","câlin"],
+    ["cuddle","câlin"],
+    ["to support","soutenir"],
+    ["to share","partager"],
+    ["trust","confiance"],
+    ["argument","dispute"],
+    ["to make up","se réconcilier"],
+    ["happy","content"],
+    ["glad","content"],
+    ["happy","contente"],
+    ["glad","contente"],
+    ["happy","heureux"],
+    ["happy","heureuse"],
+    ["sad","triste"],
+    ["angry","fâché"],
+    ["angry","fâchée"],
+    ["worried","inquiet"],
+    ["worried","inquiète"],
+    ["tired","fatigué"],
+    ["tired","fatiguée"],
+    ["stressed","stressé"],
+    ["stressed","stressée"],
+    ["surprised","surpris"],
+    ["surprised","surprise"],
+    ["proud","fier"],
+    ["proud","fière"],
+    ["embarrassed","gêné"],
+    ["embarrassed","gênée"],
+    ["to think that","penser que"],
+    ["to believe that","croire que"],
+    ["to find that","trouver que"],
+    ["to feel like","avoir envie de"],
+    ["to need","avoir besoin de"],
+    ["to be afraid of","avoir peur de"],
+    ["to look forward to","avoir hâte de"],
+    ["to hope","espérer"],
+    ["sorry","désolé"],
+    ["sorry","désolée"],
+    ["to apologize","s'excuser"],
+    ["agreed","d'accord"],
+    ["okay","d'accord"],
+    ["disagree","pas d'accord"],
+    ["sure","sûr"],
+    ["sure","sûre"],
+    ["maybe","peut-être"],
+    ["really","vraiment"],
+    ["honestly","franchement"],
+    ["honestly","honnêtement"],
+    ["house","maison"],
+    ["apartment","appartement"],
+    ["bedroom","chambre"],
+    ["kitchen","cuisine"],
+    ["living room","salon"],
+    ["work","travail"],
+    ["car","voiture"],
+    ["phone","téléphone"],
+    ["money","argent"],
+    ["time","temps"],
+    ["weather","temps"],
+    ["day","jour"],
+    ["week","semaine"],
+    ["weekend","week-end"],
+    ["morning","matin"],
+    ["evening","soir"],
+    ["night","nuit"],
+    ["meal","repas"],
+    ["dinner","dîner"],
+    ["lunch","déjeuner"],
+    ["groceries","courses"],
+    ["to go grocery shopping","faire les courses"],
+    ["to tidy","ranger"],
+    ["to clean","nettoyer"],
+    ["to come home","rentrer"],
+    ["trip","voyage"],
+    ["vacation","vacances"],
+    ["appointment","rendez-vous"],
+    ["date","rendez-vous"],
+    ["project","projet"],
+    ["plan","projet"],
+    ["problem","problème"],
+    ["solution","solution"],
+    ["coffee","café"],
+    ["water","eau"],
+    ["restaurant","restaurant"],
+    ["to invite","inviter"],
+    ["party","fête"],
+    ["birthday","anniversaire"],
+    ["gift","cadeau"],
+    ["to grab a drink","boire un verre"],
+    ["to cook","cuisiner"],
+    ["recipe","recette"],
+    ["dish","plat"],
+    ["dessert","dessert"],
+    ["cheers","santé"],
+    ["enjoy your meal","bon appétit"],
+    ["to toast","trinquer"],
+    ["to share a meal","partager un repas"],
+    ["good","bon"],
+    ["good","bonne"],
+    ["bad","mauvais"],
+    ["bad","mauvaise"],
+    ["big","grand"],
+    ["tall","grand"],
+    ["big","grande"],
+    ["tall","grande"],
+    ["small","petit"],
+    ["small","petite"],
+    ["beautiful","beau"],
+    ["beautiful","belle"],
+    ["kind","gentil"],
+    ["kind","gentille"],
+    ["funny","drôle"],
+    ["nice","sympa"],
+    ["hard","difficile"],
+    ["easy","facile"],
+    ["important","important"],
+    ["important","importante"],
+    ["different","différent"],
+    ["different","différente"],
+    ["same","pareil"],
+    ["same","pareille"],
+    ["new","nouveau"],
+    ["new","nouvelle"],
+    ["old","vieux"],
+    ["old","vieille"],
+    ["young","jeune"],
+    ["interesting","intéressant"],
+    ["interesting","intéressante"],
+    ["boring","ennuyeux"],
+    ["boring","ennuyeuse"],
+    ["busy","occupé"],
+    ["busy","occupée"],
+    ["free","libre"],
+    ["ready","prêt"],
+    ["ready","prête"],
+    ["normal","normal"],
+    ["normal","normale"],
+    ["weird","bizarre"],
+    ["great","génial"],
+    ["great","géniale"]
+  ].sort((a,b) => b[0].length - a[0].length);
+  const counts = {};
+
+  function highlight(text) {
+    const placeholders = [];
+    let result = text;
+    for (const [term, frHint] of vocab) {
+      const escaped = term.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+      const re = new RegExp("(?<![A-Za-zÀ-ÖØ-öø-ÿ'\u2019-])(" + escaped + ")(?![A-Za-zÀ-ÖØ-öø-ÿ'\u2019-])", "gi");
+      result = result.replace(re, (m) => {
+        counts[term] = counts[term] || {fr: frHint, n: 0};
+        counts[term].n++;
+        const idx = placeholders.length;
+        placeholders.push('<span class="voc" title="' + frHint + '">' + m + '</span>');
+        return "\u0000" + idx + "\u0000";
+      });
+    }
+    return result.replace(/\u0000(\d+)\u0000/g, (_, i) => placeholders[i]);
+  }
+
+  const story = 
+[
+    {t:'p', en:"On Sundays, the whole family gathers at Mamie Suzanne and Papi André's for lunch. It's a tradition that's always existed: nobody misses Sunday lunch.", fr:"Le dimanche, toute la famille se retrouve chez Mamie Suzanne et Papi André pour le déjeuner. C'est une tradition depuis toujours : personne ne manque le repas du dimanche."},
+    {t:'p', en:"Hettia and Pierrot arrive first. The grandparents' house smells like soup and warm bread.", fr:"Hettia et Pierrot arrivent les premiers. La maison des grands-parents sent la soupe et le pain chaud."},
+    {t:'d', s:"Mamie Suzanne", en:"Ah, my darlings! Come in, come in, it's a bit chilly outside.", fr:"Ah, mes chéris ! Entrez, entrez, il fait un peu frais dehors."},
+    {t:'p', en:"She kisses Pierrot, then takes Hettia in her arms, for a long time, as if she'd known her forever.", fr:"Elle embrasse Pierrot, puis elle prend Hettia dans ses bras, longtemps, comme si elle la connaissait depuis toujours."},
+    {t:'d', s:"Mamie Suzanne", en:"So, dear, did you sleep well?", fr:"Alors, ma belle, tu as bien dormi ?"},
+    {t:'d', s:"Hettia", en:"Yes, very well, thank you, Mamie.", fr:"Oui, très bien, merci, Mamie."},
+    {t:'p', en:"In the living room, Papi André is sitting in his favorite armchair. He looks up from his newspaper and smiles.", fr:"Dans le salon, Papi André est assis dans son fauteuil préféré. Il lève les yeux de son journal et sourit."},
+    {t:'d', s:"Papi André", en:"Hettia! Come sit down. You know, when I was your age, I also left my country...", fr:"Hettia ! Viens t'asseoir. Tu sais, quand j'avais ton âge, moi aussi j'ai quitté mon pays..."},
+    {t:'d', s:"Pierrot", en:"(à voix basse) Get ready, he's going to tell his boat story. He tells it every Sunday.", fr:"(à voix basse) Prépare-toi, il va raconter son histoire du bateau. Il la raconte chaque dimanche."},
+    {t:'p', en:"Hettia laughs quietly, but she sits down next to Papi André anyway. She really wants to listen.", fr:"Hettia rit doucement, mais elle s'assoit quand même à côté de Papi André. Elle veut vraiment l'écouter."},
+    {t:'d', s:"Papi André", en:"So, I was twenty, and I took a boat to come work here. I didn't know anyone.", fr:"Alors, j'avais vingt ans, et j'ai pris un bateau pour venir travailler ici. Je ne connaissais personne."},
+    {t:'d', s:"Hettia", en:"Weren't you scared?", fr:"Vous n'aviez pas peur ?"},
+    {t:'d', s:"Papi André", en:"Yes, enormously! But sometimes, you have to be scared and move forward anyway.", fr:"Si, énormément ! Mais parfois, il faut qu'on ait peur pour avancer quand même."},
+    {t:'p', en:"Hettia looks at Papi André differently now. She understands that the two of them are alike: two people who left home to build a new life.", fr:"Hettia regarde Papi André différemment, maintenant. Elle comprend qu'ils se ressemblent, tous les deux : deux personnes parties de chez elles pour construire une nouvelle vie."},
+    {t:'p', en:"In the kitchen, Marie and Mamie Suzanne are preparing the last dishes, chatting at full speed.", fr:"Dans la cuisine, Marie et Mamie Suzanne préparent les derniers plats, en discutant à toute vitesse."},
+    {t:'d', s:"Marie", en:"Mom, I have to tell you: Hettia made the beef bourguignon all by herself last Saturday.", fr:"Maman, il faut que je te dise : Hettia a préparé le bœuf bourguignon toute seule, samedi dernier."},
+    {t:'d', s:"Mamie Suzanne", en:"Oh really? Well, I'm truly impressed!", fr:"Ah oui ? Alors là, je suis vraiment impressionnée !"},
+    {t:'p', en:"When everyone finally sits down at the table, there are twelve people: the parents, the grandparents, Emma, Thomas, two cousins, and a loud uncle who tells jokes.", fr:"Quand tout le monde s'assoit enfin à table, il y a douze personnes : les parents, les grands-parents, Emma, Thomas, deux cousins, et un oncle bruyant qui raconte des blagues."},
+    {t:'p', en:"Everyone talks at the same time. Hettia tries to follow three conversations at once, and she loses the thread several times.", fr:"Tout le monde parle en même temps. Hettia essaie de suivre trois conversations à la fois, et elle perd le fil plusieurs fois."},
+    {t:'d', s:"Thomas", en:"Hettia, you okay? You look a little lost.", fr:"Hettia, ça va ? Tu as l'air un peu perdue."},
+    {t:'d', s:"Hettia", en:"A little, yes! You all talk so fast.", fr:"Un peu, oui ! Vous parlez tous tellement vite."},
+    {t:'d', s:"Oncle Marcel", en:"Ha! Don't worry, nobody understands Uncle Marcel either, even in French!", fr:"Ha ! Ne t'inquiète pas, personne ne comprend l'oncle Marcel non plus, même en français !"},
+    {t:'p', en:"The whole table bursts out laughing. Hettia relaxes a bit.", fr:"Toute la table éclate de rire. Hettia se détend un peu."},
+    {t:'p', en:"During the meal, one of the cousins, Léo, eight years old, asks a direct question.", fr:"Pendant le repas, un des cousins, Léo, huit ans, pose une question directe."},
+    {t:'d', s:"Léo", en:"Hettia, is it true you're going to marry Pierrot?", fr:"Hettia, c'est vrai que tu vas te marier avec Pierrot ?"},
+    {t:'p', en:"There's a silence. Pierrot turns a little red. Hettia smiles and takes his hand under the table.", fr:"Il y a un silence. Pierrot devient un peu rouge. Hettia sourit et prend sa main sous la table."},
+    {t:'d', s:"Hettia", en:"We'll see, Léo! One thing at a time.", fr:"On verra, Léo ! Une chose à la fois."},
+    {t:'d', s:"Mamie Suzanne", en:"So much the better! That gives you time to really get to know each other.", fr:"Tant mieux ! Ça vous laisse le temps de bien vous connaître."},
+    {t:'p', en:"After the meal, Hettia helps clear the table with Marie and Emma. Papi André comes over to her, alone.", fr:"Après le repas, Hettia aide à débarrasser la table avec Marie et Emma. Papi André s'approche d'elle, seul."},
+    {t:'d', s:"Papi André", en:"Listen, I wanted to tell you something. I'm proud of you. It's not easy to start your life over somewhere else.", fr:"Écoute, je voulais te dire quelque chose. Je suis fier de toi. Ce n'est pas facile de recommencer sa vie ailleurs."},
+    {t:'p', en:"For a moment, Hettia struggles to speak.", fr:"Hettia a du mal à parler pendant un instant."},
+    {t:'d', s:"Hettia", en:"Thank you, Papi. That really touches me.", fr:"Merci, Papi. Ça me touche vraiment."},
+    {t:'d', s:"Papi André", en:"Take care of yourself, and take care of my grandson too. He's lucky to have you.", fr:"Prends soin de toi, et prends soin de mon petit-fils aussi. Il a de la chance de t'avoir."},
+    {t:'p', en:"Later, in the car, on the way home, Hettia stays quiet for a long while.", fr:"Plus tard, dans la voiture, en rentrant chez eux, Hettia reste silencieuse un long moment."},
+    {t:'d', s:"Pierrot", en:"How was your afternoon, with the whole family?", fr:"Comment s'est passé ton après-midi, avec toute la famille ?"},
+    {t:'d', s:"Hettia", en:"It was intense... but really beautiful too. Your grandfather told me something I'll never forget.", fr:"C'était intense... mais vraiment beau, aussi. Ton grand-père m'a dit quelque chose que je n'oublierai jamais."},
+    {t:'d', s:"Pierrot", en:"What did he tell you?", fr:"Qu'est-ce qu'il t'a dit ?"},
+    {t:'d', s:"Hettia", en:"That sometimes you have to be scared, and move forward anyway. I think I'll remember that for a long time.", fr:"Qu'il fallait parfois avoir peur, et avancer quand même. Je crois que je vais m'en souvenir longtemps."},
+    {t:'p', en:"Pierrot doesn't say anything, but he squeezes her hand a little tighter. Outside, the sun is starting to set behind the hills.", fr:"Pierrot ne dit rien, mais il serre sa main un peu plus fort. Dehors, le soleil commence à descendre derrière les collines."}
+  ];
+
+  const enEl = document.getElementById('sjf-en');
+  const frEl = document.getElementById('sjf-fr');
+
+  story.forEach(block => {
+    if (block.t === 'p') {
+      const pe = document.createElement('p');
+      pe.className = 'sjf-p';
+      pe.innerHTML = highlight(block.en);
+      enEl.appendChild(pe);
+      const pf = document.createElement('p');
+      pf.className = 'sjf-p';
+      pf.textContent = block.fr;
+      frEl.appendChild(pf);
+    } else {
+      const de = document.createElement('p');
+      de.className = 'sjf-d';
+      de.innerHTML = '<span class="sjf-speaker">' + block.s + '</span>' + highlight(block.en);
+      enEl.appendChild(de);
+      const df = document.createElement('p');
+      df.className = 'sjf-d';
+      df.innerHTML = '<span class="sjf-speaker">' + block.s + '</span>' + block.fr;
+      frEl.appendChild(df);
+    }
+  });
+
+  const grid = document.getElementById('sjf-recap-grid');
+  Object.entries(counts)
+    .sort((a,b) => b[1].n - a[1].n)
+    .forEach(([term, data]) => {
+      const row = document.createElement('div');
+      row.className = 'sjf-word';
+      row.innerHTML = '<span><b>' + term + '</b> — ' + data.fr + '</span><span class="count">×' + data.n + '</span>';
+      grid.appendChild(row);
+    });
+
+  const dots = document.getElementById('sjf-dots');
+  for (let i = 1; i <= 5; i++) {
+    const d = document.createElement('div');
+    d.className = 'sjf-dot' + (i <= 4 ? ' done' : '');
+    dots.appendChild(d);
+  }
+  const label = document.createElement('span');
+  label.className = 'sjf-dots-label';
+  label.textContent = 'Chapter 4 of 5';
+  dots.appendChild(label);
+
+  window.sjfShowTab = function(tab) {
+    document.querySelectorAll('.sjf-tab').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.sjf-pane').forEach(p => p.classList.remove('active'));
+    event.target.classList.add('active');
+    document.getElementById('sjf-' + tab).classList.add('active');
+  };
+})();
+</script>
+</body>
+</html>

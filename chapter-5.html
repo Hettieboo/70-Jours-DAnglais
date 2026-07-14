@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chapter 5 — A Little Argument | 70 jours d'anglais</title>
+<style>
+  body { margin: 0; padding: 24px 16px; background: #1B2438; }
+  .sjf-root {
+    --bg: #1B2438; --panel: #232D45; --panel-2: #2A3550; --ink: #F2EAD8;
+    --ink-dim: #B9C0D4; --gold: #D4A93E; --wine: #D46A52; --line: rgba(242,234,216,0.14);
+    font-family: 'Lora', Georgia, serif; background: var(--bg); color: var(--ink);
+    border-radius: 18px; padding: 0; max-width: 760px; margin: 0 auto; overflow: hidden;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.35);
+  }
+  .sjf-root * { box-sizing: border-box; }
+  .sjf-head { padding: 36px 40px 28px; background: linear-gradient(180deg, #212B44 0%, #1B2438 100%); border-bottom: 1px solid var(--line); position: relative; }
+  .sjf-eyebrow { font-family: 'Inter', sans-serif; font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--gold); margin: 0 0 10px; }
+  .sjf-title { font-family: 'Fraunces', Georgia, serif; font-size: 34px; font-weight: 600; margin: 0 0 4px; color: var(--ink); }
+  .sjf-sub { font-style: italic; color: var(--ink-dim); margin: 0 0 20px; font-size: 15px; }
+  .sjf-dots { display: flex; gap: 6px; align-items: center; }
+  .sjf-dot { width: 7px; height: 7px; border-radius: 50%; background: rgba(242,234,216,0.18); }
+  .sjf-dot.done { background: var(--gold); }
+  .sjf-dots-label { font-family: 'Inter', sans-serif; font-size: 10.5px; color: var(--ink-dim); margin-left: 8px; letter-spacing: 0.03em; }
+  .sjf-tabs { display: flex; gap: 4px; padding: 14px 40px 0; background: var(--bg); }
+  .sjf-tab { font-family: 'Inter', sans-serif; font-size: 13px; padding: 9px 16px; border-radius: 8px 8px 0 0; cursor: pointer; color: var(--ink-dim); background: transparent; border: none; transition: color 0.15s ease; }
+  .sjf-tab.active { color: var(--ink); background: var(--panel); }
+  .sjf-body { background: var(--panel); padding: 30px 40px 10px; }
+  .sjf-pane { display: none; }
+  .sjf-pane.active { display: block; }
+  .sjf-p { margin: 0 0 16px; line-height: 1.75; font-size: 16.5px; color: var(--ink); }
+  .sjf-d { margin: 0 0 14px; line-height: 1.75; font-size: 16.5px; padding-left: 14px; border-left: 2px solid var(--line); }
+  .sjf-speaker { font-family: 'Inter', sans-serif; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--gold); display: block; margin-bottom: 3px; }
+  .voc { color: var(--wine); font-weight: 600; border-bottom: 1px dotted rgba(212,106,82,0.55); cursor: help; }
+  .sjf-recap { background: var(--panel-2); margin: 24px 0 0; padding: 26px 40px 34px; }
+  .sjf-recap h3 { font-family: 'Fraunces', Georgia, serif; font-size: 19px; color: var(--gold); margin: 0 0 4px; font-weight: 600; }
+  .sjf-recap p.hint { font-family: 'Inter', sans-serif; font-size: 12.5px; color: var(--ink-dim); margin: 0 0 16px; }
+  .sjf-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 8px 16px; }
+  .sjf-word { font-family: 'Inter', sans-serif; font-size: 13px; display: flex; justify-content: space-between; padding: 5px 0; border-bottom: 1px solid var(--line); color: var(--ink-dim); }
+  .sjf-word b { color: var(--ink); font-weight: 600; }
+  .sjf-word span.count { color: var(--gold); font-variant-numeric: tabular-nums; }
+  .sjf-note { font-family: 'Inter', sans-serif; font-size: 12px; color: var(--ink-dim); text-align: center; padding: 18px 40px 26px; background: var(--bg); }
+</style>
+</head>
+<body>
+<div class="sjf-root">
+  <div class="sjf-head">
+    <p class="sjf-eyebrow">70 jours d'anglais &middot; Chapter 5</p>
+    <h1 class="sjf-title">A Little Argument</h1>
+    <p class="sjf-sub">Une petite dispute — Même les meilleures histoires ont leurs tempêtes.</p>
+    <div class="sjf-dots" id="sjf-dots"></div>
+  </div>
+
+  <div class="sjf-tabs">
+    <button class="sjf-tab active" onclick="sjfShowTab('en')">English</button>
+    <button class="sjf-tab" onclick="sjfShowTab('fr')">Français</button>
+  </div>
+
+  <div class="sjf-body">
+    <div class="sjf-pane active" id="sjf-en"></div>
+    <div class="sjf-pane" id="sjf-fr"></div>
+  </div>
+
+  <div class="sjf-recap">
+    <h3>Vocabulary from this chapter</h3>
+    <p class="hint">Words highlighted in the story above, with how many times each appears.</p>
+    <div class="sjf-grid" id="sjf-recap-grid"></div>
+  </div>
+
+  <div class="sjf-note">That's the story so far — more chapters coming soon.</div>
+</div>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@500;600&family=Lora:ital,wght@0,400;0,500;1,400&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+<script>
+(function(){
+  const vocab = 
+[
+    ["to be","être"],
+    ["to have","avoir"],
+    ["to do","faire"],
+    ["make","faire"],
+    ["to go","aller"],
+    ["to be able to","pouvoir"],
+    ["to want","vouloir"],
+    ["to have to","devoir"],
+    ["to know","savoir"],
+    ["to see","voir"],
+    ["to take","prendre"],
+    ["to put","mettre"],
+    ["to say","dire"],
+    ["to come","venir"],
+    ["to be necessary","falloir"],
+    ["to like","aimer"],
+    ["love","aimer"],
+    ["to speak","parler"],
+    ["to think","penser"],
+    ["to believe","croire"],
+    ["to find","trouver"],
+    ["think","trouver"],
+    ["to give","donner"],
+    ["to ask","demander"],
+    ["to stay","rester"],
+    ["to pass","passer"],
+    ["spend time","passer"],
+    ["to arrive","arriver"],
+    ["to go out","sortir"],
+    ["to leave","partir"],
+    ["to understand","comprendre"],
+    ["to know","connaître"],
+    ["to feel","sentir"],
+    ["smell","sentir"],
+    ["to eat","manger"],
+    ["to drink","boire"],
+    ["to sleep","dormir"],
+    ["to work","travailler"],
+    ["to live","habiter"],
+    ["to listen","écouter"],
+    ["to watch","regarder"],
+    ["look","regarder"],
+    ["to wait","attendre"],
+    ["to try","essayer"],
+    ["to forget","oublier"],
+    ["to explain","expliquer"],
+    ["I","je"],
+    ["you","tu"],
+    ["he","il"],
+    ["she","elle"],
+    ["we","on"],
+    ["one","on"],
+    ["we","nous"],
+    ["you","vous"],
+    ["they","ils"],
+    ["they","elles"],
+    ["me","moi"],
+    ["you","toi"],
+    ["him","lui"],
+    ["the","le"],
+    ["him","le"],
+    ["it","le"],
+    ["the","la"],
+    ["her","la"],
+    ["it","la"],
+    ["the","les"],
+    ["them","les"],
+    ["my","mon"],
+    ["my","ma"],
+    ["my","mes"],
+    ["your","ton"],
+    ["your","ta"],
+    ["your","tes"],
+    ["his","son"],
+    ["her","son"],
+    ["his","sa"],
+    ["her","sa"],
+    ["his","ses"],
+    ["her","ses"],
+    ["our","notre"],
+    ["your","votre"],
+    ["their","leur"],
+    ["this","ce"],
+    ["that","ce"],
+    ["this","cette"],
+    ["that","cette"],
+    ["these","ces"],
+    ["who","qui"],
+    ["that","que"],
+    ["what","que"],
+    ["what","quoi"],
+    ["and","et"],
+    ["or","ou"],
+    ["but","mais"],
+    ["so","donc"],
+    ["because","parce que"],
+    ["so","alors"],
+    ["then","alors"],
+    ["also","aussi"],
+    ["then","puis"],
+    ["next","ensuite"],
+    ["like","comme"],
+    ["as","comme"],
+    ["if","si"],
+    ["when","quand"],
+    ["why","pourquoi"],
+    ["how","comment"],
+    ["how much","combien"],
+    ["which one","lequel"],
+    ["today","aujourd'hui"],
+    ["yesterday","hier"],
+    ["tomorrow","demain"],
+    ["now","maintenant"],
+    ["soon","bientôt"],
+    ["always","toujours"],
+    ["never","jamais"],
+    ["often","souvent"],
+    ["sometimes","parfois"],
+    ["already","déjà"],
+    ["still","encore"],
+    ["again","encore"],
+    ["right away","tout de suite"],
+    ["a lot","beaucoup"],
+    ["a little","un peu"],
+    ["enough","assez"],
+    ["too much","trop"],
+    ["little","peu"],
+    ["more","plus"],
+    ["less","moins"],
+    ["all","tout"],
+    ["all","tous"],
+    ["all","toute"],
+    ["all","toutes"],
+    ["nothing","rien"],
+    ["family","famille"],
+    ["mom","maman"],
+    ["dad","papa"],
+    ["brother","frère"],
+    ["sister","sœur"],
+    ["son","fils"],
+    ["daughter","fille"],
+    ["husband","mari"],
+    ["wife","femme"],
+    ["boyfriend","copain"],
+    ["girlfriend","copine"],
+    ["father-in-law","beau-père"],
+    ["mother-in-law","belle-mère"],
+    ["brother-in-law","beau-frère"],
+    ["sister-in-law","belle-sœur"],
+    ["grandparents","grands-parents"],
+    ["grandfather","grand-père"],
+    ["grandmother","grand-mère"],
+    ["child","enfant"],
+    ["baby","bébé"],
+    ["uncle","oncle"],
+    ["aunt","tante"],
+    ["cousin","cousin"],
+    ["cousin","cousine"],
+    ["love","amour"],
+    ["heart","cœur"],
+    ["together","ensemble"],
+    ["I miss you","tu me manques"],
+    ["to kiss","embrasser"],
+    ["hug","embrasser"],
+    ["hug","câlin"],
+    ["cuddle","câlin"],
+    ["to support","soutenir"],
+    ["to share","partager"],
+    ["trust","confiance"],
+    ["argument","dispute"],
+    ["to make up","se réconcilier"],
+    ["happy","content"],
+    ["glad","content"],
+    ["happy","contente"],
+    ["glad","contente"],
+    ["happy","heureux"],
+    ["happy","heureuse"],
+    ["sad","triste"],
+    ["angry","fâché"],
+    ["angry","fâchée"],
+    ["worried","inquiet"],
+    ["worried","inquiète"],
+    ["tired","fatigué"],
+    ["tired","fatiguée"],
+    ["stressed","stressé"],
+    ["stressed","stressée"],
+    ["surprised","surpris"],
+    ["surprised","surprise"],
+    ["proud","fier"],
+    ["proud","fière"],
+    ["embarrassed","gêné"],
+    ["embarrassed","gênée"],
+    ["to think that","penser que"],
+    ["to believe that","croire que"],
+    ["to find that","trouver que"],
+    ["to feel like","avoir envie de"],
+    ["to need","avoir besoin de"],
+    ["to be afraid of","avoir peur de"],
+    ["to look forward to","avoir hâte de"],
+    ["to hope","espérer"],
+    ["sorry","désolé"],
+    ["sorry","désolée"],
+    ["to apologize","s'excuser"],
+    ["agreed","d'accord"],
+    ["okay","d'accord"],
+    ["disagree","pas d'accord"],
+    ["sure","sûr"],
+    ["sure","sûre"],
+    ["maybe","peut-être"],
+    ["really","vraiment"],
+    ["honestly","franchement"],
+    ["honestly","honnêtement"],
+    ["house","maison"],
+    ["apartment","appartement"],
+    ["bedroom","chambre"],
+    ["kitchen","cuisine"],
+    ["living room","salon"],
+    ["work","travail"],
+    ["car","voiture"],
+    ["phone","téléphone"],
+    ["money","argent"],
+    ["time","temps"],
+    ["weather","temps"],
+    ["day","jour"],
+    ["week","semaine"],
+    ["weekend","week-end"],
+    ["morning","matin"],
+    ["evening","soir"],
+    ["night","nuit"],
+    ["meal","repas"],
+    ["dinner","dîner"],
+    ["lunch","déjeuner"],
+    ["groceries","courses"],
+    ["to go grocery shopping","faire les courses"],
+    ["to tidy","ranger"],
+    ["to clean","nettoyer"],
+    ["to come home","rentrer"],
+    ["trip","voyage"],
+    ["vacation","vacances"],
+    ["appointment","rendez-vous"],
+    ["date","rendez-vous"],
+    ["project","projet"],
+    ["plan","projet"],
+    ["problem","problème"],
+    ["solution","solution"],
+    ["coffee","café"],
+    ["water","eau"],
+    ["restaurant","restaurant"],
+    ["to invite","inviter"],
+    ["party","fête"],
+    ["birthday","anniversaire"],
+    ["gift","cadeau"],
+    ["to grab a drink","boire un verre"],
+    ["to cook","cuisiner"],
+    ["recipe","recette"],
+    ["dish","plat"],
+    ["dessert","dessert"],
+    ["cheers","santé"],
+    ["enjoy your meal","bon appétit"],
+    ["to toast","trinquer"],
+    ["to share a meal","partager un repas"],
+    ["good","bon"],
+    ["good","bonne"],
+    ["bad","mauvais"],
+    ["bad","mauvaise"],
+    ["big","grand"],
+    ["tall","grand"],
+    ["big","grande"],
+    ["tall","grande"],
+    ["small","petit"],
+    ["small","petite"],
+    ["beautiful","beau"],
+    ["beautiful","belle"],
+    ["kind","gentil"],
+    ["kind","gentille"],
+    ["funny","drôle"],
+    ["nice","sympa"],
+    ["hard","difficile"],
+    ["easy","facile"],
+    ["important","important"],
+    ["important","importante"],
+    ["different","différent"],
+    ["different","différente"],
+    ["same","pareil"],
+    ["same","pareille"],
+    ["new","nouveau"],
+    ["new","nouvelle"],
+    ["old","vieux"],
+    ["old","vieille"],
+    ["young","jeune"],
+    ["interesting","intéressant"],
+    ["interesting","intéressante"],
+    ["boring","ennuyeux"],
+    ["boring","ennuyeuse"],
+    ["busy","occupé"],
+    ["busy","occupée"],
+    ["free","libre"],
+    ["ready","prêt"],
+    ["ready","prête"],
+    ["normal","normal"],
+    ["normal","normale"],
+    ["weird","bizarre"],
+    ["great","génial"],
+    ["great","géniale"]
+  ].sort((a,b) => b[0].length - a[0].length);
+  const counts = {};
+
+  function highlight(text) {
+    const placeholders = [];
+    let result = text;
+    for (const [term, frHint] of vocab) {
+      const escaped = term.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+      const re = new RegExp("(?<![A-Za-zÀ-ÖØ-öø-ÿ'\u2019-])(" + escaped + ")(?![A-Za-zÀ-ÖØ-öø-ÿ'\u2019-])", "gi");
+      result = result.replace(re, (m) => {
+        counts[term] = counts[term] || {fr: frHint, n: 0};
+        counts[term].n++;
+        const idx = placeholders.length;
+        placeholders.push('<span class="voc" title="' + frHint + '">' + m + '</span>');
+        return "\u0000" + idx + "\u0000";
+      });
+    }
+    return result.replace(/\u0000(\d+)\u0000/g, (_, i) => placeholders[i]);
+  }
+
+  const story = 
+[
+    {t:'p', en:"A week goes by. Hettia is starting to feel more comfortable with Pierrot's family, but she's also tired: French lessons, work, Sunday visits... it's all piling up.", fr:"Une semaine passe. Hettia commence à se sentir plus à l'aise avec la famille de Pierrot, mais elle est aussi fatiguée : les cours de français, le travail, les visites du dimanche... tout s'accumule."},
+    {t:'p', en:"One Friday evening, Pierrot comes home to the apartment with big news.", fr:"Un vendredi soir, Pierrot rentre à l'appartement avec une grande nouvelle."},
+    {t:'d', s:"Pierrot", en:"Guess what! I invited the whole family here, tomorrow evening. Even Uncle Marcel and the cousins from Lyon!", fr:"Devine quoi ! J'ai invité toute la famille ici, demain soir. Même l'oncle Marcel et les cousins de Lyon !"},
+    {t:'p', en:"Hettia sets down her bag, surprised.", fr:"Hettia pose son sac, surprise."},
+    {t:'d', s:"Hettia", en:"Here? Tomorrow evening? You didn't tell me anything.", fr:"Ici ? Demain soir ? Tu ne m'as rien dit."},
+    {t:'d', s:"Pierrot", en:"I wanted to surprise you! It'll be nice, won't it?", fr:"Je voulais te faire une surprise ! Ce sera sympa, non ?"},
+    {t:'p', en:"Hettia feels a lump in her throat. She's already tired, and now she has to prepare dinner for ten people, in a single evening.", fr:"Hettia sent une boule dans sa gorge. Elle est déjà fatiguée, et maintenant elle doit préparer un dîner pour dix personnes, en une seule soirée."},
+    {t:'d', s:"Hettia", en:"Pierrot, I'm really tired this week. I need to rest, not organize a party.", fr:"Pierrot, je suis vraiment fatiguée cette semaine. J'ai besoin de me reposer, pas d'organiser une fête."},
+    {t:'d', s:"Pierrot", en:"It's not a party, it's just a dinner. You're exaggerating a bit, aren't you?", fr:"Ce n'est pas une fête, c'est juste un dîner. Tu exagères un peu, non ?"},
+    {t:'p', en:"Hettia feels anger rising.", fr:"Hettia sent la colère monter."},
+    {t:'d', s:"Hettia", en:"I'm not exaggerating! You make decisions without asking me, and then you say I'm exaggerating when I'm tired?", fr:"Je n'exagère pas ! Tu prends des décisions sans me demander, et après, tu dis que j'exagère quand je suis fatiguée ?"},
+    {t:'d', s:"Pierrot", en:"I thought it would make you happy! You always say you love my family.", fr:"Je pensais que ça te ferait plaisir ! Tu dis toujours que tu aimes ma famille."},
+    {t:'d', s:"Hettia", en:"I love your family, but that's not the point. The point is that you never ask my opinion before deciding.", fr:"J'aime ta famille, mais ce n'est pas la question. La question, c'est que tu ne me demandes jamais mon avis avant de décider."},
+    {t:'p', en:"A heavy silence falls over the apartment.", fr:"Un silence lourd tombe dans l'appartement."},
+    {t:'d', s:"Pierrot", en:"Okay, honestly, I don't understand. Everyone loves you, everything's going well... I don't see the problem.", fr:"D'accord, franchement, je ne comprends pas. Tout le monde t'aime, tout se passe bien... je ne vois pas le problème."},
+    {t:'d', s:"Hettia", en:"The problem is that I'm new here. Every Sunday, every dinner, every conversation is an effort for me. In French, everything takes twice as much energy. And you add a ten-person dinner without asking me.", fr:"Le problème, c'est que je suis nouvelle ici. Chaque dimanche, chaque dîner, chaque conversation, c'est un effort pour moi. En français, tout prend deux fois plus d'énergie. Et toi, tu ajoutes un dîner de dix personnes sans me demander."},
+    {t:'p', en:"Pierrot stays silent for a moment. He hadn't thought about that.", fr:"Pierrot reste silencieux un instant. Il n'avait pas pensé à ça."},
+    {t:'d', s:"Pierrot", en:"I... I didn't know it was that hard for you.", fr:"Je... je ne savais pas que c'était aussi difficile pour toi."},
+    {t:'d', s:"Hettia", en:"Because I don't say it often. I don't want to complain. But right now, honestly, I'm exhausted.", fr:"Parce que je ne le dis pas souvent. Je ne veux pas me plaindre. Mais là, franchement, je suis épuisée."},
+    {t:'p', en:"Pierrot comes closer, but Hettia gently raises her hand.", fr:"Pierrot s'approche, mais Hettia lève la main, doucement."},
+    {t:'d', s:"Hettia", en:"I need a moment alone, please.", fr:"J'ai besoin d'un moment seule, s'il te plaît."},
+    {t:'p', en:"Pierrot hesitates, then grabs his jacket.", fr:"Pierrot hésite, puis il prend sa veste."},
+    {t:'d', s:"Pierrot", en:"Okay. I'm going to... go get some air. We'll talk again later.", fr:"D'accord. Je vais... je vais prendre l'air. On se reparle tout à l'heure."},
+    {t:'p', en:"He goes out. The door closes softly behind him.", fr:"Il sort. La porte se ferme doucement derrière lui."},
+    {t:'p', en:"Hettia sits down on the couch, alone. Her heart feels heavy. She doesn't like arguments, especially with Pierrot.", fr:"Hettia s'assoit sur le canapé, seule. Elle a le cœur lourd. Elle n'aime pas les disputes, surtout avec Pierrot."},
+    {t:'p', en:"She picks up her phone and looks at a photo of her and Pierrot, taken the day she arrived at the train station.", fr:"Elle prend son téléphone et regarde une photo d'elle et Pierrot, prise le jour de son arrivée à la gare."},
+    {t:'p', en:"She thinks: \"Am I being unfair? Or am I really right to be angry?\"", fr:"Elle pense : « Est-ce que je suis injuste ? Ou est-ce que j'ai vraiment raison d'être fâchée ? »"},
+    {t:'p', en:"Outside, Pierrot walks down the street, hands in his pockets. He replays the conversation in his head.", fr:"Dehors, Pierrot marche dans la rue, les mains dans les poches. Il repense à la conversation."},
+    {t:'p', en:"Little by little, he understands that he never really imagined how tiring all of this could be for her: a new language, a new family, a new country, all at once.", fr:"Il comprend, petit à petit, qu'il n'a jamais vraiment imaginé à quel point tout ça pouvait être fatigant pour elle : une nouvelle langue, une nouvelle famille, un nouveau pays, tout en même temps."},
+    {t:'p', en:"He stops in front of a closed bakery and looks at his reflection in the window.", fr:"Il s'arrête devant une boulangerie fermée et regarde son reflet dans la vitrine."},
+    {t:'d', s:"Pierrot", en:"(à lui-même) I think I was selfish.", fr:"(à lui-même) Je crois que j'ai été égoïste."},
+    {t:'p', en:"He takes out his phone to call Marie, his mother, to cancel tomorrow's dinner. But he hesitates.", fr:"Il sort son téléphone pour appeler Marie, sa mère, pour annuler le dîner du lendemain. Mais il hésite."},
+    {t:'p', en:"He finally decides to go back and talk to Hettia first. The dinner can wait.", fr:"Il décide finalement de rentrer d'abord parler à Hettia. Le dîner peut attendre."},
+    {t:'p', en:"Back at the apartment, he finds Hettia still on the couch, her eyes a bit red.", fr:"De retour à l'appartement, il trouve Hettia toujours sur le canapé, les yeux un peu rouges."},
+    {t:'d', s:"Pierrot", en:"Hettia... I'm sorry. You're right. I should have asked you first.", fr:"Hettia... je suis désolé. Tu as raison. J'aurais dû te demander avant."},
+    {t:'p', en:"Hettia looks at him, still a little sad, but relieved to hear those words.", fr:"Hettia le regarde, encore un peu triste, mais soulagée d'entendre ces mots."},
+    {t:'d', s:"Hettia", en:"Thank you for saying that. That means a lot to me.", fr:"Merci de dire ça. Ça compte beaucoup pour moi."},
+    {t:'p', en:"Pierrot sits down next to her, without touching her, without forcing anything.", fr:"Pierrot s'assoit à côté d'elle, sans la toucher, sans rien forcer."},
+    {t:'d', s:"Pierrot", en:"What do you want to do, for tomorrow? We can cancel, or change the date, or...", fr:"Qu'est-ce que tu veux faire, pour demain ? On peut annuler, ou changer la date, ou..."},
+    {t:'p', en:"Hettia thinks for a moment. She's not completely at peace yet, but she senses something important just happened between them.", fr:"Hettia réfléchit un moment. Elle n'est pas encore complètement apaisée, mais elle sent que quelque chose d'important vient de se passer entre eux."},
+    {t:'d', s:"Hettia", en:"Let's talk about it again tomorrow morning, okay? Right now, I just want... to be with you, in silence.", fr:"On en reparle demain matin, d'accord ? Là, je veux juste... être avec toi, en silence."},
+    {t:'p', en:"Pierrot nods. They stay sitting together, without talking, for a long time. It's not resolved yet, but it's no longer as heavy.", fr:"Pierrot hoche la tête. Ils restent assis ensemble, sans parler, pendant longtemps. Ce n'est pas encore résolu, mais ce n'est plus aussi lourd."}
+  ];
+
+  const enEl = document.getElementById('sjf-en');
+  const frEl = document.getElementById('sjf-fr');
+
+  story.forEach(block => {
+    if (block.t === 'p') {
+      const pe = document.createElement('p');
+      pe.className = 'sjf-p';
+      pe.innerHTML = highlight(block.en);
+      enEl.appendChild(pe);
+      const pf = document.createElement('p');
+      pf.className = 'sjf-p';
+      pf.textContent = block.fr;
+      frEl.appendChild(pf);
+    } else {
+      const de = document.createElement('p');
+      de.className = 'sjf-d';
+      de.innerHTML = '<span class="sjf-speaker">' + block.s + '</span>' + highlight(block.en);
+      enEl.appendChild(de);
+      const df = document.createElement('p');
+      df.className = 'sjf-d';
+      df.innerHTML = '<span class="sjf-speaker">' + block.s + '</span>' + block.fr;
+      frEl.appendChild(df);
+    }
+  });
+
+  const grid = document.getElementById('sjf-recap-grid');
+  Object.entries(counts)
+    .sort((a,b) => b[1].n - a[1].n)
+    .forEach(([term, data]) => {
+      const row = document.createElement('div');
+      row.className = 'sjf-word';
+      row.innerHTML = '<span><b>' + term + '</b> — ' + data.fr + '</span><span class="count">×' + data.n + '</span>';
+      grid.appendChild(row);
+    });
+
+  const dots = document.getElementById('sjf-dots');
+  for (let i = 1; i <= 5; i++) {
+    const d = document.createElement('div');
+    d.className = 'sjf-dot' + (i <= 5 ? ' done' : '');
+    dots.appendChild(d);
+  }
+  const label = document.createElement('span');
+  label.className = 'sjf-dots-label';
+  label.textContent = 'Chapter 5 of 5';
+  dots.appendChild(label);
+
+  window.sjfShowTab = function(tab) {
+    document.querySelectorAll('.sjf-tab').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.sjf-pane').forEach(p => p.classList.remove('active'));
+    event.target.classList.add('active');
+    document.getElementById('sjf-' + tab).classList.add('active');
+  };
+})();
+</script>
+</body>
+</html>
