@@ -22,7 +22,7 @@
   .sjf-dot { width: 7px; height: 7px; border-radius: 50%; background: rgba(242,234,216,0.18); }
   .sjf-dot.done { background: var(--gold); }
   .sjf-dots-label { font-family: 'Inter', sans-serif; font-size: 10.5px; color: var(--ink-dim); margin-left: 8px; letter-spacing: 0.03em; }
-  .sjf-tabs { display: flex; gap: 4px; padding: 14px 40px 0; background: var(--bg); }
+  .sjf-tabs { display: flex; gap: 4px; padding: 14px 40px 14px; background: var(--bg); align-items: center; }
   .sjf-tab { font-family: 'Inter', sans-serif; font-size: 13px; padding: 9px 16px; border-radius: 8px 8px 0 0; cursor: pointer; color: var(--ink-dim); background: transparent; border: none; transition: color 0.15s ease; }
   .sjf-tab.active { color: var(--ink); background: var(--panel); }
   .sjf-body { background: var(--panel); padding: 30px 40px 10px; }
@@ -39,6 +39,32 @@
   .sjf-word { font-family: 'Inter', sans-serif; font-size: 13px; display: flex; justify-content: space-between; padding: 5px 0; border-bottom: 1px solid var(--line); color: var(--ink-dim); }
   .sjf-word b { color: var(--ink); font-weight: 600; }
   .sjf-word span.count { color: var(--gold); font-variant-numeric: tabular-nums; }
+  .sjf-say {
+    font-family: 'Inter', sans-serif;
+    font-size: 11px;
+    margin-left: 8px;
+    padding: 2px 9px;
+    border-radius: 999px;
+    border: 1px solid var(--line);
+    background: transparent;
+    color: var(--ink-dim);
+    cursor: pointer;
+    vertical-align: middle;
+  }
+  .sjf-say:hover { background: var(--gold); color: var(--bg); border-color: var(--gold); }
+  .sjf-play-btn {
+    font-family: 'Inter', sans-serif;
+    font-size: 12.5px;
+    margin-left: auto;
+    padding: 8px 16px;
+    border-radius: 999px;
+    border: 1px solid var(--gold);
+    background: transparent;
+    color: var(--gold);
+    cursor: pointer;
+  }
+  .sjf-play-btn:hover { background: var(--gold); color: var(--bg); }
+  .sjf-playing { background: rgba(212,169,62,0.12); border-radius: 6px; }
   .sjf-note { font-family: 'Inter', sans-serif; font-size: 12px; color: var(--ink-dim); text-align: center; padding: 18px 40px 26px; background: var(--bg); }
 </style>
 </head>
@@ -54,6 +80,7 @@
   <div class="sjf-tabs">
     <button class="sjf-tab active" onclick="sjfShowTab('en')">English</button>
     <button class="sjf-tab" onclick="sjfShowTab('fr')">Français</button>
+    <button class="sjf-play-btn" id="sjf-play">▶ Play chapter</button>
   </div>
 
   <div class="sjf-body">
@@ -448,11 +475,84 @@
   const enEl = document.getElementById('sjf-en');
   const frEl = document.getElementById('sjf-fr');
 
+  let englishVoice = null, englishVoiceFemale = null, englishVoiceMale = null;
+  function loadVoices() {
+    const voices = window.speechSynthesis ? window.speechSynthesis.getVoices() : [];
+    const en = voices.filter(v => v.lang && v.lang.startsWith('en'));
+    englishVoice = en.find(v => v.lang === 'en-GB') || en.find(v => v.lang === 'en-US') || en[0] || null;
+    const FEMALE = /female|samantha|victoria|karen|moira|tessa|fiona|kate|serena|susan|zira|hazel|allison|ava|kathy|shelley|catherine|joanna|kendra|salli|nicky|amy|emma|joanie|flo|princess/i;
+    const MALE = /\bmale\b|daniel|alex|fred|oliver|arthur|ralph|david|george|thomas|aaron|nathan|justin|eric|kevin|matthew|brian|guy(?!\w)|james|mark|gordon|rishi/i;
+    englishVoiceFemale = en.find(v => FEMALE.test(v.name)) || null;
+    englishVoiceMale = en.find(v => MALE.test(v.name) && !FEMALE.test(v.name)) || null;
+  }
+  if (window.speechSynthesis) {
+    loadVoices();
+    window.speechSynthesis.onvoiceschanged = loadVoices;
+  }
+  function stripTags(t) { return t.replace(/<[^>]*>/g, ''); }
+  function voiceFor(speaker) {
+    if (speaker === 'Hettia') return englishVoiceFemale;
+    if (speaker === 'Pierrot') return englishVoiceMale;
+    return null;
+  }
+  function speakLine(text, voice, onEnd) {
+    if (!window.speechSynthesis) return;
+    window.speechSynthesis.cancel();
+    const u = new SpeechSynthesisUtterance(stripTags(text));
+    u.lang = 'en-GB';
+    u.voice = voice || englishVoice;
+    u.rate = 0.92;
+    if (onEnd) u.onend = onEnd;
+    window.speechSynthesis.speak(u);
+  }
+
+  let playIndex = -1;
+  let isPlaying = false;
+  const playBtn = document.getElementById('sjf-play');
+
+  function playNext() {
+    playIndex++;
+    if (playIndex >= story.length || !isPlaying) {
+      isPlaying = false;
+      document.querySelectorAll('.sjf-playing').forEach(el => el.classList.remove('sjf-playing'));
+      if (playBtn) playBtn.textContent = '▶ Play chapter';
+      return;
+    }
+    const block = story[playIndex];
+    document.querySelectorAll('.sjf-playing').forEach(el => el.classList.remove('sjf-playing'));
+    const lineEl = enEl.children[playIndex];
+    if (lineEl) { lineEl.classList.add('sjf-playing'); lineEl.scrollIntoView({behavior:'smooth', block:'center'}); }
+    const voice = block.t === 'd' ? voiceFor(block.s) : null;
+    speakLine(block.en, voice, playNext);
+  }
+
+  if (playBtn) {
+    playBtn.onclick = () => {
+      if (isPlaying) {
+        isPlaying = false;
+        window.speechSynthesis.cancel();
+        document.querySelectorAll('.sjf-playing').forEach(el => el.classList.remove('sjf-playing'));
+        playBtn.textContent = '▶ Play chapter';
+      } else {
+        isPlaying = true;
+        playIndex = -1;
+        playBtn.textContent = '■ Stop';
+        playNext();
+      }
+    };
+  }
+
   story.forEach(block => {
     if (block.t === 'p') {
       const pe = document.createElement('p');
       pe.className = 'sjf-p';
       pe.innerHTML = highlight(block.en);
+      const btnE = document.createElement('button');
+      btnE.className = 'sjf-say';
+      btnE.textContent = '🔊';
+      btnE.setAttribute('aria-label', 'Listen');
+      btnE.onclick = () => speakLine(block.en, null);
+      pe.appendChild(btnE);
       enEl.appendChild(pe);
       const pf = document.createElement('p');
       pf.className = 'sjf-p';
@@ -462,6 +562,12 @@
       const de = document.createElement('p');
       de.className = 'sjf-d';
       de.innerHTML = '<span class="sjf-speaker">' + block.s + '</span>' + highlight(block.en);
+      const btnE = document.createElement('button');
+      btnE.className = 'sjf-say';
+      btnE.textContent = '🔊';
+      btnE.setAttribute('aria-label', 'Listen: ' + block.s);
+      btnE.onclick = () => speakLine(block.en, voiceFor(block.s));
+      de.appendChild(btnE);
       enEl.appendChild(de);
       const df = document.createElement('p');
       df.className = 'sjf-d';
